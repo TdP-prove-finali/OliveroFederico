@@ -1,5 +1,6 @@
 package it.polito.tdp.provaFinale;
 
+import it.polito.tdp.provaFinale.model.Model;
 import javafx.application.Application;
 
 import javafx.fxml.FXMLLoader;
@@ -14,9 +15,9 @@ public class EntryPoint extends Application {
     public void start(Stage stage) throws Exception {
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InterfacciaGrafica.fxml"));
 		BorderPane root = loader.load();
-		//FXMLController controller = loader.getController();
-		//Model model = new Model();
-		//controller.setModel(model);
+		FXMLController controller = loader.getController();
+		Model model = new Model();
+		controller.setModel(model);
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(getClass().getResource("/styles/Styles.css").toExternalForm());
 		stage.setScene(scene);
