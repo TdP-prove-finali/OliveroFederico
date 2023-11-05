@@ -1,10 +1,10 @@
 package it.polito.tdp.provaFinale;
 
 import javafx.application.Application;
-import static javafx.application.Application.launch;
+
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 
@@ -12,15 +12,15 @@ public class EntryPoint extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"));
-        
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add("/styles/Styles.css");
-        scene.getRoot().setStyle("-fx-font-family: 'serif'");
-
-        stage.setTitle("JavaFX and Maven");
-        stage.setScene(scene);
-        stage.show();
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InterfacciaGrafica.fxml"));
+		BorderPane root = loader.load();
+		//FXMLController controller = loader.getController();
+		//Model model = new Model();
+		//controller.setModel(model);
+		Scene scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("/styles/Styles.css").toExternalForm());
+		stage.setScene(scene);
+		stage.show();
     }
 
     /**
