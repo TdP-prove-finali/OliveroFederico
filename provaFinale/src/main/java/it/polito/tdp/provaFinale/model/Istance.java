@@ -65,7 +65,7 @@ public class Istance {
 
 	@Override
 	public String toString() {
-		return this.scenario+"_" + prodotto;
+		return this.scenario.substring(0, 5)+"_" + prodotto;
 	}
 
 	

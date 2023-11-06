@@ -29,10 +29,32 @@ public class Model {
 		
 	}
 	
-	public List<List<Istance>> scheduleIstances(){
+	public List<RowIstances> scheduleIstances(){
+		
+		List<RowIstances> ritorno = new ArrayList<RowIstances>();
 		
 		Scheduling s = new Scheduling();
-		return s.startScheduling(this.istances, true);
+		List<List<Istance>> lista = s.startScheduling(this.istances, true);
+		
+		boolean flag = false;
+		int contatore = 0;
+		while(!flag) {
+			
+			String array[] = new String[5];
+			for(int i=0; i<5; i++) {
+				flag = true;
+				if(lista.get(i).size()>contatore) {
+					array[i] = lista.get(i).get(contatore).toString();
+					flag = false;
+				}
+				else 
+					array[i] = null;
+			}
+			RowIstances ri = new RowIstances(array[0],array[1],array[2],array[3],array[4]);
+			ritorno.add(ri);
+			contatore++;
+		}
+		return ritorno;
 	}
 
 

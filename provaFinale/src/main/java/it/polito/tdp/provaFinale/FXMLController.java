@@ -1,18 +1,24 @@
 package it.polito.tdp.provaFinale;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.provaFinale.model.Istance;
 import it.polito.tdp.provaFinale.model.Model;
+import it.polito.tdp.provaFinale.model.RowIstances;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
 public class FXMLController{
@@ -56,37 +62,62 @@ public class FXMLController{
 	    private CheckBox switchCheckBox;
 	    
 	    @FXML
+	    private TableView<RowIstances> table = new TableView<RowIstances>();
+	    
+	    @FXML
+	    private TableColumn<RowIstances, String> col1;
+
+	    @FXML
+	    private TableColumn<RowIstances, String> col2;
+
+	    @FXML
+	    private TableColumn<RowIstances, String> col3;
+
+	    @FXML
+	    private TableColumn<RowIstances, String> col4;
+
+	    @FXML
+	    private TableColumn<RowIstances, String> col5;
+	    
+	    @FXML
 	    void doSchedule(ActionEvent event) {
 	    	
-	    	List<List<Istance>> schedulated = model.scheduleIstances();
-//	    	for(int i=0; i<50; i++) {
-//	    		
-//	    		String toPrint = "";
-//	    		
-//	    		boolean endFlag = false;
-//	    		
-//	    		for(int k=0; k<schedulated.size(); k++) {
-//	    			
-//	    			if(schedulated.get(k).size() > i) {
-//	    				toPrint+=schedulated.get(k).get(i).toString()+"                          ";
-//	    				endFlag = true;
-//	    			}
-//	    			else
-//	    				toPrint+="-------------------"+"                          ";
-//
-//	    		}
-//	    		
-//	    		toPrint.strip();
-//	    		toPrint+="\n";
-//	    		
-//	    		this.outputTextArea.appendText(toPrint);
-//	    		
-//	    		if(!endFlag)
-//	    			break;
-//	    	}
+	    	List<RowIstances> toPrint = model.scheduleIstances();
 	    	
-	    	TableView table = new TableView();
+	    	 ObservableList<RowIstances> data = FXCollections.observableArrayList(toPrint);
 	    	
+	    	//lavoro sulla tabella
+	    	this.table.setEditable(true);
+	    	
+	    	table.getColumns().clear();
+	    	
+	    	col1 = new TableColumn<RowIstances, String>("UFT-ONE-1");
+	        col1.setMinWidth(146);
+	    	col1.setCellValueFactory(
+	                new PropertyValueFactory<RowIstances, String>("i1"));
+	    	
+	    	col2 = new TableColumn<RowIstances, String>("UFT-ONE-2");
+	        col2.setMinWidth(146);
+	    	col2.setCellValueFactory(
+	                new PropertyValueFactory<RowIstances, String>("i2"));
+	    	
+	    	col3 = new TableColumn<RowIstances, String>("UFT-ONE-3");
+	        col3.setMinWidth(146);
+	    	col3.setCellValueFactory(
+	                new PropertyValueFactory<RowIstances, String>("i3"));
+	    	
+	    	col4 = new TableColumn<RowIstances, String>("UFT-ONE-4");
+	        col4.setMinWidth(146);
+	    	col4.setCellValueFactory(
+	                new PropertyValueFactory<RowIstances, String>("i4"));
+	    	
+	    	col5 = new TableColumn<RowIstances, String>("UFT-ONE-5");
+	        col5.setMinWidth(146);
+	    	col5.setCellValueFactory(
+	                new PropertyValueFactory<RowIstances, String>("i5"));
+	    	
+	    	table.setItems(data);
+	        table.getColumns().addAll(col1, col2, col3, col4, col5);
 	    }
 	    
 	    @FXML
@@ -117,6 +148,12 @@ public class FXMLController{
 	        assert simulateButton != null : "fx:id=\"simulateButton\" was not injected: check your FXML file 'Scene.fxml'.";
 	        assert stabilitySlider != null : "fx:id=\"stabilitySlider\" was not injected: check your FXML file 'Scene.fxml'.";
 	        assert switchCheckBox != null : "fx:id=\"switchCheckBox\" was not injected: check your FXML file 'Scene.fxml'.";
+	        assert col1 != null : "fx:id=\"col1\" was not injected: check your FXML file 'InterfacciaGrafica.fxml'.";
+	        assert col2 != null : "fx:id=\"col2\" was not injected: check your FXML file 'InterfacciaGrafica.fxml'.";
+	        assert col3 != null : "fx:id=\"col3\" was not injected: check your FXML file 'InterfacciaGrafica.fxml'.";
+	        assert col4 != null : "fx:id=\"col4\" was not injected: check your FXML file 'InterfacciaGrafica.fxml'.";
+	        assert col5 != null : "fx:id=\"col5\" was not injected: check your FXML file 'InterfacciaGrafica.fxml'.";
+	        assert table != null : "fx:id=\"table\" was not injected: check your FXML file 'InterfacciaGrafica.fxml'.";
 	    }
 
 		public void setModel(Model model) {
