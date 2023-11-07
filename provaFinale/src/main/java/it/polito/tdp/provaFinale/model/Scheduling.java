@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public class Scheduling {
 
 	private int max;
@@ -23,7 +24,8 @@ public class Scheduling {
 	
 	public List<List<Istance>> startScheduling(List<Istance> istances, boolean randomScheduling) {
 		
-		List<Istance> start = new ArrayList<Istance>(istances);
+		List<Istance> start = this.reduce(istances);
+		
 		
 		Collections.sort(start, new IstancesComparator());
 		if(randomScheduling)
@@ -35,6 +37,8 @@ public class Scheduling {
 		
 	}
 	
+
+
 	/*  METODO DI INIZIO SCHEDULAZIONE
 	 * @PARAM prende in input una lista di istanze da schedulare e un numero di macchine su cui schedulare
 	 * avvia la ricorsione
@@ -299,4 +303,19 @@ public class Scheduling {
 	
 	
 	//------------------------------------METODI PREPARATORI------------------------------------
+	private List<Istance> reduce(List<Istance> istances) {
+		// TODO Auto-generated method stub
+	
+		List<Istance> ritorno = new ArrayList<Istance>();
+		
+		for(Istance i : istances) {
+			if(! (i.getScenario().contains("Ced") || i.getScenario().contains("Riden") ||
+																i.getScenario().contains("Riv")) )
+					ritorno.add(i);
+		
+		}
+		
+		return ritorno;
+		
+	}
 }

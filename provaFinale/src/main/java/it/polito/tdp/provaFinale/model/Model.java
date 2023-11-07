@@ -33,6 +33,10 @@ public class Model {
 		
 		List<RowIstances> ritorno = new ArrayList<RowIstances>();
 		
+		List<Istance> ridenominazioni = this.getIstanzeFromScenario("Ridenom");
+		
+		ritorno.add(new RowIstances(ridenominazioni.get(0).toString(), ridenominazioni.get(1).toString(), null, null, null));
+		
 		Scheduling s = new Scheduling();
 		List<List<Istance>> lista = s.startScheduling(this.istances, true);
 		
@@ -54,6 +58,9 @@ public class Model {
 			ritorno.add(ri);
 			contatore++;
 		}
+		
+		
+		
 		return ritorno;
 	}
 
@@ -92,6 +99,17 @@ public class Model {
 	}
 	
 	
+	public List<Istance>getIstanzeFromScenario(String scenario){
+		
+		List<Istance> ritorno = new ArrayList<Istance>();
+		
+		for(Istance i : this.istances) {
+			if(i.getScenario().contains(scenario))
+				ritorno.add(i);
+		}
+		
+		return ritorno;
+	}
 	
-
+	
 }

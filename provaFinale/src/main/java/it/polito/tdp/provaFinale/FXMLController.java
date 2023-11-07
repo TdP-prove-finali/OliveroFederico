@@ -90,6 +90,41 @@ public class FXMLController{
 	    	this.table.setEditable(true);
 	    	
 	    	table.getColumns().clear();
+//	    	
+//	    	col1 = new TableColumn<RowIstances, String>("UFT-ONE-1");
+//	        col1.setMinWidth(146);
+//	    	col1.setCellValueFactory(
+//	                new PropertyValueFactory<RowIstances, String>("i1"));
+//	    	
+//	    	col2 = new TableColumn<RowIstances, String>("UFT-ONE-2");
+//	        col2.setMinWidth(146);
+//	    	col2.setCellValueFactory(
+//	                new PropertyValueFactory<RowIstances, String>("i2"));
+//	    	
+//	    	col3 = new TableColumn<RowIstances, String>("UFT-ONE-3");
+//	        col3.setMinWidth(146);
+//	    	col3.setCellValueFactory(
+//	                new PropertyValueFactory<RowIstances, String>("i3"));
+//	    	
+//	    	col4 = new TableColumn<RowIstances, String>("UFT-ONE-4");
+//	        col4.setMinWidth(146);
+//	    	col4.setCellValueFactory(
+//	                new PropertyValueFactory<RowIstances, String>("i4"));
+//	    	
+//	    	col5 = new TableColumn<RowIstances, String>("UFT-ONE-5");
+//	        col5.setMinWidth(146);
+//	    	col5.setCellValueFactory(
+//	                new PropertyValueFactory<RowIstances, String>("i5"));
+	    	createColumns();
+
+	    	
+	    	table.setItems(data);
+	        table.getColumns().addAll(col1, col2, col3, col4, col5);
+	        
+	        this.simulateButton.setDisable(false);
+	    }
+	    
+	    private void createColumns(){
 	    	
 	    	col1 = new TableColumn<RowIstances, String>("UFT-ONE-1");
 	        col1.setMinWidth(146);
@@ -116,19 +151,18 @@ public class FXMLController{
 	    	col5.setCellValueFactory(
 	                new PropertyValueFactory<RowIstances, String>("i5"));
 	    	
-	    	table.setItems(data);
-	        table.getColumns().addAll(col1, col2, col3, col4, col5);
 	    }
 	    
 	    @FXML
 	    void doReset(ActionEvent event) {
 	    	
-	    	this.outputTextArea.clear();
+	    	//this.outputTextArea.clear();
 	    	this.emissioniCheckBox.setSelected(false);
 	    	this.riscattiCheckBox.setSelected(false);
 	    	this.switchCheckBox.setSelected(false);
 	    	this.schedulingCheckBox.setSelected(false);
 	    	this.stabilitySlider.setValue(0);
+	    	this.table.getColumns().clear();
 	    }
 
 	    @FXML
@@ -159,6 +193,7 @@ public class FXMLController{
 		public void setModel(Model model) {
 			// TODO Auto-generated method stub
 			this.model = model;
+			this.simulateButton.setDisable(true);
 			
 		}
     
