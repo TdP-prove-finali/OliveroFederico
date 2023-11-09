@@ -10,7 +10,7 @@ public class RunDAO {
 
 	public Integer getAvgSuccessDuration(Istance is) {
 		
-		final String sql = "SELECT r.istance, AVG(r.duration) FROM runs r WHERE r.`date`> '2023/09/1' AND r.`status` = 1 AND r.istance = "+is.getId()+" GROUP BY r.istance ";
+		final String sql = "SELECT r.istance, AVG(r.duration) FROM runs r WHERE r.`date`> '2023/10/15' AND r.`status` = 1 AND r.istance = "+is.getId()+" GROUP BY r.istance ";
 		Integer avgDuration = 0;
 		
 		try {

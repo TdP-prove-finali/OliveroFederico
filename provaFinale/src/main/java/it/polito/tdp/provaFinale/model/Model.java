@@ -15,6 +15,7 @@ public class Model {
 	List<VirtualMachine> vms;
 	
 	
+	
 	public Model() {
 		
 		this.vms = generateVirtualMachines();
@@ -38,7 +39,9 @@ public class Model {
 		ritorno.add(new RowIstances(ridenominazioni.get(0).toString(), ridenominazioni.get(1).toString(), null, null, null));
 		
 		Scheduling s = new Scheduling();
-		List<List<Istance>> lista = s.startScheduling(this.istances, true);
+		List<List<Istance>> lista = s.startScheduling(this.istances, true, 40000);
+		
+		this.updateMachines(lista);
 		
 		boolean flag = false;
 		int contatore = 0;
@@ -109,6 +112,19 @@ public class Model {
 		}
 		
 		return ritorno;
+	}
+	
+	private void updateMachines(List<List<Istance>> lista) {
+		
+		for(int i=0; i<5; i++) {
+			
+			List<Istance> istancesOnVm = lista.get(i);
+			for(Istance is: istancesOnVm) {
+				this.vms.get(i).addIstance(is);
+			}
+		}
+		
+		
 	}
 	
 	

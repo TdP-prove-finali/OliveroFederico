@@ -16,16 +16,17 @@ public class Scheduling {
 	private int nShuffle=0;
 	
 	public Scheduling() {
-		max = 34000;
+		max = 0;
 		flag = false;
 		contatore = 0;
 	}
 	
 	
-	public List<List<Istance>> startScheduling(List<Istance> istances, boolean randomScheduling) {
+	public List<List<Istance>> startScheduling(List<Istance> istances, boolean randomScheduling, int maxInput) {
 		
 		List<Istance> start = this.reduce(istances);
 		
+		this.max = maxInput;
 		
 		Collections.sort(start, new IstancesComparator());
 		if(randomScheduling)
@@ -70,12 +71,13 @@ public class Scheduling {
 		
 		
 		contatore++;
+		int worst = getDurationSlowestMachine(parziale);
 		
 		//condizione di uscita
 		
-		if(livello == livelloMax && getDurationSlowestMachine(parziale) < max) {
+		if(livello == livelloMax && worst < max) {
 			flag = true;
-			max = getDurationSlowestMachine(parziale);
+			max = worst;
 			stampa(parziale);
 			ritorno.clear();
 			for(int i=0; i<parziale.size();i++) {
@@ -96,7 +98,7 @@ public class Scheduling {
 		
 		// se tempo attuale della macchina piu lenta peggiore di max, anche se non ancora schedulate tutte
 		// le istanze, torna indietro ed esegui ricorsione( non perdere tempo)
-		else if(getDurationSlowestMachine(parziale)>max) {
+		else if(worst>max) {
 			//stampa(parziale);
 			//System.out.println("-------troppo tempo!!--------\n");
 			return;
@@ -110,15 +112,13 @@ public class Scheduling {
 		
 		
 		Istance is = start.get(0);
-		if(contatore<livelloMax) {
-			//Collections.sort(parziale, new ListComparator());
-		}
+		
 
-		//per ogni macchina
+		//per ogni macchina, ordinate
 		for(int m : this.getOrdine(parziale)) {
-
+		//for(int m=0; m<5; m++){
 			//se istanza non in conflitto con altre istanze su altre macchine, aggiungi e ricerca
-			if(!inConflict(is, m, parziale) && !scheduled(is, parziale)) {
+			if(!inConflict(is, m, parziale)) {
 				
 				parziale.get(m).add(is);	
 				start.remove(is);
@@ -291,15 +291,15 @@ public class Scheduling {
 		
 	}
 	
-	public boolean tutteConAlmeno4Elementi(List<List<Istance>> parziale) {
-	
-		for(List<Istance> list: parziale) {
-			if(list.size()<4)
-				return false;
-		}
-		return true;
-		
-	}
+//	public boolean tutteConAlmeno4Elementi(List<List<Istance>> parziale) {
+//	
+//		for(List<Istance> list: parziale) {
+//			if(list.size()<4)
+//				return false;
+//		}
+//		return true;
+//		
+//	}
 	
 	
 	//------------------------------------METODI PREPARATORI------------------------------------
