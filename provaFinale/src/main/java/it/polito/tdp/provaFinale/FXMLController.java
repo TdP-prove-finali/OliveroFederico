@@ -51,6 +51,9 @@ public class FXMLController{
 	    private Button scheduleButton;
 
 	    @FXML
+	    private CheckBox simulationCheckBox;
+	    
+	    @FXML
 	    private CheckBox schedulingCheckBox;
 
 	    @FXML
@@ -83,6 +86,8 @@ public class FXMLController{
 	    @FXML
 	    void doSimulation(ActionEvent event) {
 	    	
+	    	this.outputArea.clear();
+	    	
 	    	double sliderValue = this.stabilitySlider.getValue();
 	    	
 	    	int stability = 1;
@@ -94,9 +99,11 @@ public class FXMLController{
 	    	boolean flagEmissioni = this.emissioniCheckBox.isSelected();
 	    	boolean flagRiscatti = this.riscattiCheckBox.isSelected();
 	    	boolean flagSwitch = this.switchCheckBox.isSelected();
+	    	
+	    	boolean simulazioneIntelligente = this.simulationCheckBox.isSelected();
 
 	    	
-	    	List<RowIstances> toPrint = model.simulateEvents(stability, flagEmissioni, flagRiscatti, flagSwitch);
+	    	List<RowIstances> toPrint = model.simulateEvents(stability, flagEmissioni, flagRiscatti, flagSwitch, simulazioneIntelligente);
 	    	
 	    	RowIstances analisi = toPrint.remove(toPrint.size()-1);
 	    	
@@ -117,15 +124,19 @@ public class FXMLController{
 	        this.outputArea.appendText(analisi.getI2()+"\n");
 	        this.outputArea.appendText(analisi.getI3()+"\n");
 	        this.outputArea.appendText(analisi.getI4()+"\n");
-	        this.outputArea.appendText(analisi.getI5()+"\n");
+	        this.outputArea.appendText(analisi.getI5());
 	    }
 	    
 	    @FXML
 	    void doSchedule(ActionEvent event) {
 	    	
-	    	this.outputArea.setText("prova");
+	    	this.model=new Model();
+	    	this.outputArea.clear();
 	    	
-	    	List<RowIstances> toPrint = model.scheduleIstances();
+	    	boolean shuffle = false;
+	    	if(this.schedulingCheckBox.isSelected())
+	    		shuffle = true;
+	    	List<RowIstances> toPrint = model.scheduleIstances(shuffle);
 	    	
 	    	 ObservableList<RowIstances> data = FXCollections.observableArrayList(toPrint);
 	    	
@@ -172,27 +183,27 @@ public class FXMLController{
 	    private void createColumns(){
 	    	
 	    	col1 = new TableColumn<RowIstances, String>("UFT-ONE-1");
-	        col1.setMinWidth(166);
+	        col1.setMinWidth(164);
 	    	col1.setCellValueFactory(
 	                new PropertyValueFactory<RowIstances, String>("i1"));
 	    	
 	    	col2 = new TableColumn<RowIstances, String>("UFT-ONE-2");
-	        col2.setMinWidth(166);
+	        col2.setMinWidth(164);
 	    	col2.setCellValueFactory(
 	                new PropertyValueFactory<RowIstances, String>("i2"));
 	    	
 	    	col3 = new TableColumn<RowIstances, String>("UFT-ONE-3");
-	        col3.setMinWidth(166);
+	        col3.setMinWidth(164);
 	    	col3.setCellValueFactory(
 	                new PropertyValueFactory<RowIstances, String>("i3"));
 	    	
 	    	col4 = new TableColumn<RowIstances, String>("UFT-ONE-4");
-	        col4.setMinWidth(166);
+	        col4.setMinWidth(164);
 	    	col4.setCellValueFactory(
 	                new PropertyValueFactory<RowIstances, String>("i4"));
 	    	
 	    	col5 = new TableColumn<RowIstances, String>("UFT-ONE-5");
-	        col5.setMinWidth(166);
+	        col5.setMinWidth(164);
 	    	col5.setCellValueFactory(
 	                new PropertyValueFactory<RowIstances, String>("i5"));
 	    	
@@ -206,10 +217,11 @@ public class FXMLController{
 	    	this.emissioniCheckBox.setSelected(false);
 	    	this.riscattiCheckBox.setSelected(false);
 	    	this.switchCheckBox.setSelected(false);
-	    	this.schedulingCheckBox.setSelected(false);
+	    	this.simulationCheckBox.setSelected(false);
 	    	this.stabilitySlider.setValue(0);
 	    	this.table.getColumns().clear();
 	    	this.outputArea.clear();
+	    	this.simulateButton.setDisable(true);
 	    }
 
 	    
@@ -222,7 +234,8 @@ public class FXMLController{
 	        assert resetButton != null : "fx:id=\"resetButton\" was not injected: check your FXML file 'Scene.fxml'.";
 	        assert riscattiCheckBox != null : "fx:id=\"riscattiCheckBox\" was not injected: check your FXML file 'Scene.fxml'.";
 	        assert scheduleButton != null : "fx:id=\"scheduleButton\" was not injected: check your FXML file 'Scene.fxml'.";
-	        assert schedulingCheckBox != null : "fx:id=\"schedulingCheckBox\" was not injected: check your FXML file 'Scene.fxml'.";
+	        assert simulationCheckBox != null : "fx:id=\"schedulingCheckBox\" was not injected: check your FXML file 'Scene.fxml'.";
+	        assert schedulingCheckBox != null : "fx:id=\"schedulingCheckBox\" was not injected: check your FXML file 'InterfacciaGrafica.fxml'.";
 	        assert simulateButton != null : "fx:id=\"simulateButton\" was not injected: check your FXML file 'Scene.fxml'.";
 	        assert stabilitySlider != null : "fx:id=\"stabilitySlider\" was not injected: check your FXML file 'Scene.fxml'.";
 	        assert switchCheckBox != null : "fx:id=\"switchCheckBox\" was not injected: check your FXML file 'Scene.fxml'.";

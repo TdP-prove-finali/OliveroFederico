@@ -15,12 +15,15 @@ import it.polito.tdp.provaFinale.model.Event.EventType;
 public class Simulator {
 
 	//------------------------INPUT-------------------------
-	//liste di macchine e istanze
+	
+	// FROM MODEL
 	List<VirtualMachine> machines;
 	List<Istance> istances;
-	//valori inseriti dall'utente
+	
+	//FROM USER
 	int stability ;
 	Map<String, Boolean> stabilityMap;
+	boolean simulazioneIntelligente;
 	
 	//orari di inizio e fine (16 ore totali)
 	private LocalTime startDay1 = LocalTime.of(8, 0, 0);
@@ -35,21 +38,17 @@ public class Simulator {
 	//istanze in esecuzione
 	private List<Istance> currently;
 	
-	//
 	private List<Istance> concluded = new ArrayList<Istance>();
 	private int failures = 0;
-	private int issues = 0;
 	private int emptyMachines = 0;
 	private List<Event> successi = new ArrayList<Event>();
 	List<Event> issuesList = new ArrayList<Event>();
-
-	//
+	private LocalTime endSimulationTime;
+	
 	SchedulingV2 schedulingClass;
-
-	List<Istance> istanzeVm2 ;
 	
 	
-	public Simulator(List<VirtualMachine> vms, List<Istance> toSimulate, int stability, boolean emissioni, boolean riscatti, boolean switchs) {
+	public Simulator(List<VirtualMachine> vms, List<Istance> toSimulate, int stability, boolean emissioni, boolean riscatti, boolean switchs, boolean simulazioneIntelligente) {
 		
 		//this.toSimulate = new ArrayList<List<Istance>>(toSimulate);
 		this.machines = new ArrayList<VirtualMachine> (vms);
@@ -58,9 +57,9 @@ public class Simulator {
 		this.currently = new ArrayList<Istance>();
 		for(VirtualMachine vm : vms) {
 			vm.simulation = new ArrayList<Event>();
-			if(vm.getId().contains("2"))
-				this.istanzeVm2 = new ArrayList<Istance>(vm.getIstances());
+			vm.regenerateIstancesForSimulation();
 		}
+		this.simulazioneIntelligente = simulazioneIntelligente;
 		this.stability = stability;
 		this.stabilityMap = new HashMap<String, Boolean>();
 		this.stabilityMap.put("Emissione", emissioni);
@@ -74,10 +73,6 @@ public class Simulator {
 		
 	}
 	
-//	// metodo per ritornare la simulazione pronta per essere stampata
-//	public void getSimulation() {
-//		
-//	}
 	
 	public void initialize() {
 		
@@ -137,8 +132,6 @@ public class Simulator {
 			case START_RUN:
 				
 				Double x = Math.random();
-				
-				//da rivedere!!!!!!!!!!!!!
 				Double indexes[] = generateSuccessIndex(is, currently);
 				
 				//SUCCESS
@@ -209,7 +202,11 @@ public class Simulator {
 				//altrimenti controllo che vi siano altre istanze in code su altre vm, e in caso le schedulo
 				else {
 					
-					Istance newIstance = null;//findIstanceToRun();
+					Istance newIstance;
+					if(simulazioneIntelligente)
+						newIstance = findIstanceToRun();
+					else
+						newIstance = null;
 					
 					if(newIstance!=null) {
 						
@@ -263,7 +260,11 @@ public class Simulator {
 				//altrimenti controllo che vi siano altre istanze in code su altre vm, e in caso le schedulo
 				else {
 					
-					Istance newIstanceI = null;// findIstanceToRun();
+					Istance newIstanceI;
+					if(simulazioneIntelligente)
+						newIstanceI = findIstanceToRun();
+					else
+						newIstanceI = null;
 					
 					if(newIstanceI!=null) {
 						
@@ -290,6 +291,7 @@ public class Simulator {
 				break;
 				
 			case END_SIMULATION:
+				this.endSimulationTime = e.getTime();
 				this.queue.clear();
 				break;
 		}
@@ -422,8 +424,8 @@ public class Simulator {
 		r3.strip();
 		int mancanti = 49-this.concluded.size()-this.issuesList.size();
 		String r4 = "NUMERO TEST NON ESEGUITI: "+mancanti;
-		
-		RowIstances ritorno = new RowIstances(r1, r2, r3, r4, null);
+		String r5 = "ORA DI INIZIO: "+this.startDay1+" ORA DI FINE: "+this.endSimulationTime;
+		RowIstances ritorno = new RowIstances(r1, r2, r3, r4, r5);
 		
 		return ritorno;
 		

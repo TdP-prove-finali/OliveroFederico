@@ -30,7 +30,7 @@ public class Model {
 		
 	}
 	
-	public List<RowIstances> scheduleIstances(){
+	public List<RowIstances> scheduleIstances(boolean shuffle){
 		
 		List<RowIstances> ritorno = new ArrayList<RowIstances>();
 		
@@ -38,8 +38,12 @@ public class Model {
 		
 		//ritorno.add(new RowIstances(ridenominazioni.get(0).toString(), ridenominazioni.get(1).toString(), null, null, null));
 		
+		int max = 33500;
+		if(shuffle)
+			max = 35000;
+		
 		Scheduling s = new Scheduling();
-		List<List<Istance>> lista = s.startScheduling(this.istances, false, 30000);
+		List<List<Istance>> lista = s.startScheduling(this.istances, shuffle, max);
 		
 		this.updateMachines(lista);
 		
@@ -123,14 +127,16 @@ public class Model {
 			for(Istance is: istancesOnVm) {
 				this.vms.get(i).addIstance(is);
 			}
+			
+			this.vms.get(i).createDuplicate();
 		}
 		
 		
 	}
 	
-	public List<RowIstances> simulateEvents(int stability, boolean emissioni, boolean riscatti, boolean switchs){
+	public List<RowIstances> simulateEvents(int stability, boolean emissioni, boolean riscatti, boolean switchs, boolean simulazioneIntelligente){
 		
-		Simulator sim = new Simulator(this.vms, this.istances, stability, emissioni, riscatti, switchs);
+		Simulator sim = new Simulator(this.vms, this.istances, stability, emissioni, riscatti, switchs, simulazioneIntelligente);
 		sim.initialize();
 		sim.run();
 		

@@ -10,6 +10,7 @@ public class VirtualMachine implements Comparable<VirtualMachine>{
 	int duration;
 	int machineNumber;
 	List<Event> simulation;
+	List<Istance> duplicateIstances;
 
 	public VirtualMachine(String id) {
 		super();
@@ -87,5 +88,12 @@ public class VirtualMachine implements Comparable<VirtualMachine>{
 	public void addEventToSimulation(Event e) {
 		this.simulation.add(e);
 	}
+
+	public void createDuplicate() {
+		this.duplicateIstances = new ArrayList<Istance>(this.istances);
+	}
 	
+	public void regenerateIstancesForSimulation() {
+		this.istances = new ArrayList<Istance>(this.duplicateIstances);
+	}
 }
