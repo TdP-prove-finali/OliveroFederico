@@ -32,4 +32,93 @@ public class RunDAO {
 		}
 		return avgDuration;
 	}
+	
+	public Integer getIstanceSuccesses(Istance is) {
+		
+		final String sql = "SELECT COUNT(*) AS successi FROM (SELECT * fROM runs r WHERE r.istance = "+is.getId()+" AND r.`status` = 1 GROUP BY r.date) AS tabella";
+		
+		Integer ritorno = null;
+		
+		try {
+			Connection conn = DBConnect.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			ResultSet res = st.executeQuery();
+			if(res.next())
+				ritorno = res.getInt("successi");
+			
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("SQL Error");
+		}
+		return ritorno;
+		
+	}
+	
+	public Integer getMaxFailur(Istance is) {
+		
+		final String sql = "SELECT MAX(dailyFailur) AS maxFailur FROM (SELECT COUNT(*) dailyFailur fROM runs r WHERE r.istance = "+is.getId()+" AND r.`status` = 0 GROUP BY r.date) AS tabella";
+		
+		Integer ritorno = null;
+		
+		try {
+			Connection conn = DBConnect.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			ResultSet res = st.executeQuery();
+			if(res.next())
+				ritorno = res.getInt("maxFailur");
+			
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("SQL Error");
+		}
+		return ritorno;
+		
+	}
+	
+	public Integer getFailurDays(Istance is) {
+		
+		final String sql = "SELECT COUNT(DISTINCT r.date) AS numberOfFailurDays FROM runs r WHERE r.istance = '"+is.getId()+"' AND r.`status` = '0'";
+		
+		Integer ritorno = null;
+		
+		try {
+			Connection conn = DBConnect.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			ResultSet res = st.executeQuery();
+			if(res.next())
+				ritorno = res.getInt("numberOfFailurDays");
+			
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("SQL Error");
+		}
+		
+		return ritorno;
+		
+	}
+	
+	public Double getAverageFailurs(Istance is) {
+		
+		final String sql = "SELECT AVG(dailyFailur) AS avgFailur FROM (SELECT COUNT(*) dailyFailur fROM runs r WHERE r.istance = "+is.getId()+" AND r.`status` = 0 GROUP BY r.date) AS tabella";
+		
+		Double ritorno = null;
+		
+		try {
+			Connection conn = DBConnect.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			ResultSet res = st.executeQuery();
+			if(res.next())
+				ritorno = res.getDouble("avgFailur");
+			
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("SQL Error");
+		}
+		
+		return ritorno;
+	}
 }

@@ -11,17 +11,19 @@ public class Scheduling {
 
 	private int max;
 	private boolean flag;
-	private int contatore;
 	private int livelloMax;
-	private int nShuffle=0;
 	
 	public Scheduling() {
 		max = 0;
 		flag = false;
-		contatore = 0;
 	}
 	
 	
+	/*  METODO PUBBLICO, PERMETTE L'INIZIO DELLA SCHEDULAZIONE DA UN ALTRA CLASSE
+	 * @PARAM prende in input una lista di istanze, un boleano che indica se va fatto un
+	 * 		riordinamento casuale della lista iniziale, e il max in termini di secondi
+	 * @RETURN ritorna la schedulazione sotto forma di lista di liste di istanze
+	 */
 	public List<List<Istance>> startScheduling(List<Istance> istances, boolean randomScheduling, int maxInput) {
 		
 		List<Istance> start = this.reduce(istances);
@@ -45,7 +47,7 @@ public class Scheduling {
 	 * avvia la ricorsione
 	 * @RETURN restituisce la schedulazione sotto forma di lista di liste di istanze  
 	 */
-	public List<List<Istance>> schedule(List<Istance> toSchedule, int nVM){
+	private List<List<Istance>> schedule(List<Istance> toSchedule, int nVM){
 		
 		//creo un parziale, contenente una lista di istanze per macchina (nMacchine passato in input)
 		List<List<Istance>> parziale = new ArrayList<List<Istance>>();
@@ -54,69 +56,54 @@ public class Scheduling {
 			parziale.add(listaM);
 		}
 		List<List<Istance>> ritorno = new ArrayList<List<Istance>>();
-		System.out.println("-------first: "+toSchedule.get(0)+"--------\n");
+		//System.out.println("-------first: "+toSchedule.get(0)+"--------\n");
 		
 		livelloMax = toSchedule.size();
 		ricerca(toSchedule, parziale, ritorno, 0);
 		return ritorno;
 	}
 	
-	/*  METODO PER LA RICERCA
-	 * @PARAM
-	 * 
-	 * @RETURN
-	 */
-	public void ricerca(List<Istance> start, List<List<Istance>> parziale, List<List<Istance>>ritorno,  int livello) {
-
+	
+	//  METODO PER LA RICERCA 
+	private void ricerca(List<Istance> start, List<List<Istance>> parziale, List<List<Istance>>ritorno,  int livello) {
 		
-		
-		contatore++;
 		int worst = getDurationSlowestMachine(parziale);
 		
-		//condizione di uscita
+		//---------------------------CONDIZIONI DI USCITA---------------------
 		
 		if(livello == livelloMax && worst < max) {
 			flag = true;
 			max = worst;
-			stampa(parziale);
+			//stampa(parziale);
 			ritorno.clear();
 			for(int i=0; i<parziale.size();i++) {
 				//System.out.println(parziale.get(i));
 				List<Istance> vmRitorno = new ArrayList<Istance>(parziale.get(i));
 				ritorno.add(vmRitorno);
 			}
-			System.out.println("-------fine, migliore--------\n");
 			return;
 			}
 		
 		//se tutte le istanze sono state schedulate ma non si ha un tempo migliore del max, torna ai passi precedenti
 		else if(livello==livelloMax) {
-			//System.out.println("-------fine--------\n");
-			//stampa(parziale);
 			return;
 		}
 		
 		// se tempo attuale della macchina piu lenta peggiore di max, anche se non ancora schedulate tutte
 		// le istanze, torna indietro ed esegui ricorsione( non perdere tempo)
 		else if(worst>max) {
-			//stampa(parziale);
-			//System.out.println("-------troppo tempo!!--------\n");
 			return;
 		}
 		
 		
-		//parte ricorsiva
-		
+		//------------------------------PARTE RICORSIVA------------------------------
 		
 		//prendi la prima istanza in start
-		
-		
 		Istance is = start.get(0);
 		
-
 		//per ogni macchina, ordinate
 		for(int m : this.getOrdine(parziale)) {
-		//for(int m=0; m<5; m++){
+			
 			//se istanza non in conflitto con altre istanze su altre macchine, aggiungi e ricerca
 			if(!inConflict(is, m, parziale)) {
 				
@@ -126,15 +113,9 @@ public class Scheduling {
 					ricerca(start, parziale, ritorno,livello+1);
 					parziale.get(m).remove(is);
 					start.add(is);
-				}	
-				
+				}		
 			}
-			
-			
 		}
-		
-		
-		
 	}
 	
 	
@@ -217,50 +198,9 @@ public class Scheduling {
 		return false;
 	}
 	
-	//stampa il numero del tentativo attuale, il max, e la schedulazione
-	public void stampa(List<List<Istance>> daStampare) {
-		System.out.println(contatore);
-		System.out.println(max);
-		int dimensione = 0;
-		for(List<Istance> lista : daStampare) {
-			System.out.println(lista);
-			dimensione+=lista.size();
-		}
-		System.out.println(dimensione);
-	}
-	
-	private boolean scheduled(Istance is, List<List<Istance>> parziale) {
-		// TODO Auto-generated method stub
-		
-		for(List<Istance> listaVm : parziale)
-			for(Istance i : listaVm) {
-				if(i.getScenario().compareTo(is.getScenario())==0 
-						&& i.getProdotto().compareTo(is.getProdotto())==0
-						&& i.getDurataMedia()==is.getDurataMedia())
-					return true;
-			}
-		
-		return false;
-	}
-	
-	
-	
-	
-	/*
-	//ritorna true se tutte le istanze sono state schedulate, aka totale istanze in parziale=start
-	private boolean allScheduled(List<List<Istance>> parziale, List<Istance> start) {
 
-		int totale = 0;
-		for(List<Istance> vm: parziale) {
-			totale += vm.size();
-		}
-		if(totale == start.size())
-			return true;
-		
-		return false;
-	}
-	*/
 	
+
 	public int getDurationMachine(List<Istance> vm) {
 		int totale = 0;
 		for(Istance i : vm) {
@@ -270,9 +210,7 @@ public class Scheduling {
 	}
 	
 	public List<Integer> getOrdine(List<List<Istance>> parziale){
-		
-		List<List<Istance>> temp = new ArrayList<List<Istance>>(parziale);
-		
+				
 		List<Integer> ritorno = new ArrayList<Integer>();
 		List<Integer> durate = new ArrayList<Integer>();
 		
@@ -290,17 +228,7 @@ public class Scheduling {
 		return ritorno;
 		
 	}
-	
-//	public boolean tutteConAlmeno4Elementi(List<List<Istance>> parziale) {
-//	
-//		for(List<Istance> list: parziale) {
-//			if(list.size()<4)
-//				return false;
-//		}
-//		return true;
-//		
-//	}
-	
+		
 	
 	//------------------------------------METODI PREPARATORI------------------------------------
 	private List<Istance> reduce(List<Istance> istances) {
@@ -318,4 +246,32 @@ public class Scheduling {
 		return ritorno;
 		
 	}
+	
+	//----------------------------NON UTILIZZATI------------------------
+	
+//	//stampa il numero del tentativo attuale, il max, e la schedulazione
+//	public void stampa(List<List<Istance>> daStampare) {
+//		//System.out.println(contatore);
+//		//System.out.println(max);
+//		int dimensione = 0;
+//		for(List<Istance> lista : daStampare) {
+//			//System.out.println(lista);
+//			dimensione+=lista.size();
+//		}
+//		//System.out.println(dimensione);
+//	}
+//	
+//	private boolean scheduled(Istance is, List<List<Istance>> parziale) {
+//		// TODO Auto-generated method stub
+//		
+//		for(List<Istance> listaVm : parziale)
+//			for(Istance i : listaVm) {
+//				if(i.getScenario().compareTo(is.getScenario())==0 
+//						&& i.getProdotto().compareTo(is.getProdotto())==0
+//						&& i.getDurataMedia()==is.getDurataMedia())
+//					return true;
+//			}
+//		
+//		return false;
+//	}
 }

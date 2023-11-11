@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import it.polito.tdp.provaFinale.model.Istance;
 import it.polito.tdp.provaFinale.model.Model;
+import it.polito.tdp.provaFinale.model.RowEvents;
 import it.polito.tdp.provaFinale.model.RowIstances;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -38,7 +39,7 @@ public class FXMLController{
 	    private CheckBox emissioniCheckBox;
 
 	    @FXML
-	    private TextArea outputTextArea;
+	    private TextArea outputArea;
 
 	    @FXML
 	    private Button resetButton;
@@ -80,7 +81,49 @@ public class FXMLController{
 	    private TableColumn<RowIstances, String> col5;
 	    
 	    @FXML
+	    void doSimulation(ActionEvent event) {
+	    	
+	    	double sliderValue = this.stabilitySlider.getValue();
+	    	
+	    	int stability = 1;
+	    	if(sliderValue<=0.33)
+	    		stability = 0;
+	    	else if(sliderValue>=0.67)
+	    		stability=2;
+	    	
+	    	boolean flagEmissioni = this.emissioniCheckBox.isSelected();
+	    	boolean flagRiscatti = this.riscattiCheckBox.isSelected();
+	    	boolean flagSwitch = this.switchCheckBox.isSelected();
+
+	    	
+	    	List<RowIstances> toPrint = model.simulateEvents(stability, flagEmissioni, flagRiscatti, flagSwitch);
+	    	
+	    	RowIstances analisi = toPrint.remove(toPrint.size()-1);
+	    	
+	    	
+	    	 ObservableList<RowIstances> data = FXCollections.observableArrayList(toPrint);
+	    	
+	    	//lavoro sulla tabella
+	    	this.table.setEditable(true);
+	    	
+	    	table.getColumns().clear();
+	    	
+	    	createColumns();
+
+	    	table.setItems(data);
+	        table.getColumns().addAll(col1, col2, col3, col4, col5);
+	        
+	        this.outputArea.appendText(analisi.getI1()+"\n");
+	        this.outputArea.appendText(analisi.getI2()+"\n");
+	        this.outputArea.appendText(analisi.getI3()+"\n");
+	        this.outputArea.appendText(analisi.getI4()+"\n");
+	        this.outputArea.appendText(analisi.getI5()+"\n");
+	    }
+	    
+	    @FXML
 	    void doSchedule(ActionEvent event) {
+	    	
+	    	this.outputArea.setText("prova");
 	    	
 	    	List<RowIstances> toPrint = model.scheduleIstances();
 	    	
@@ -121,33 +164,35 @@ public class FXMLController{
 	    	table.setItems(data);
 	        table.getColumns().addAll(col1, col2, col3, col4, col5);
 	        
+	        
+	        
 	        this.simulateButton.setDisable(false);
 	    }
 	    
 	    private void createColumns(){
 	    	
 	    	col1 = new TableColumn<RowIstances, String>("UFT-ONE-1");
-	        col1.setMinWidth(146);
+	        col1.setMinWidth(166);
 	    	col1.setCellValueFactory(
 	                new PropertyValueFactory<RowIstances, String>("i1"));
 	    	
 	    	col2 = new TableColumn<RowIstances, String>("UFT-ONE-2");
-	        col2.setMinWidth(146);
+	        col2.setMinWidth(166);
 	    	col2.setCellValueFactory(
 	                new PropertyValueFactory<RowIstances, String>("i2"));
 	    	
 	    	col3 = new TableColumn<RowIstances, String>("UFT-ONE-3");
-	        col3.setMinWidth(146);
+	        col3.setMinWidth(166);
 	    	col3.setCellValueFactory(
 	                new PropertyValueFactory<RowIstances, String>("i3"));
 	    	
 	    	col4 = new TableColumn<RowIstances, String>("UFT-ONE-4");
-	        col4.setMinWidth(146);
+	        col4.setMinWidth(166);
 	    	col4.setCellValueFactory(
 	                new PropertyValueFactory<RowIstances, String>("i4"));
 	    	
 	    	col5 = new TableColumn<RowIstances, String>("UFT-ONE-5");
-	        col5.setMinWidth(146);
+	        col5.setMinWidth(166);
 	    	col5.setCellValueFactory(
 	                new PropertyValueFactory<RowIstances, String>("i5"));
 	    	
@@ -156,6 +201,7 @@ public class FXMLController{
 	    @FXML
 	    void doReset(ActionEvent event) {
 	    	
+	    	this.model = new Model();
 	    	//this.outputTextArea.clear();
 	    	this.emissioniCheckBox.setSelected(false);
 	    	this.riscattiCheckBox.setSelected(false);
@@ -163,18 +209,16 @@ public class FXMLController{
 	    	this.schedulingCheckBox.setSelected(false);
 	    	this.stabilitySlider.setValue(0);
 	    	this.table.getColumns().clear();
+	    	this.outputArea.clear();
 	    }
 
-	    @FXML
-	    void doSimulation(ActionEvent event) {
-
-	    }
+	    
 
 	    @FXML
 	    void initialize() {
 	        assert Ancor != null : "fx:id=\"Ancor\" was not injected: check your FXML file 'Scene.fxml'.";
 	        assert emissioniCheckBox != null : "fx:id=\"emissioniCheckBox\" was not injected: check your FXML file 'Scene.fxml'.";
-	        assert outputTextArea != null : "fx:id=\"outputTextArea\" was not injected: check your FXML file 'Scene.fxml'.";
+	        assert outputArea != null : "fx:id=\"outputTextArea\" was not injected: check your FXML file 'Scene.fxml'.";
 	        assert resetButton != null : "fx:id=\"resetButton\" was not injected: check your FXML file 'Scene.fxml'.";
 	        assert riscattiCheckBox != null : "fx:id=\"riscattiCheckBox\" was not injected: check your FXML file 'Scene.fxml'.";
 	        assert scheduleButton != null : "fx:id=\"scheduleButton\" was not injected: check your FXML file 'Scene.fxml'.";

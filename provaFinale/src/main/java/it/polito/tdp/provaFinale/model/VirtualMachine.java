@@ -9,6 +9,7 @@ public class VirtualMachine implements Comparable<VirtualMachine>{
 	List<Istance> istances;
 	int duration;
 	int machineNumber;
+	List<Event> simulation;
 
 	public VirtualMachine(String id) {
 		super();
@@ -50,8 +51,8 @@ public class VirtualMachine implements Comparable<VirtualMachine>{
 	}
 	
 	public void removeIstance(Istance is) {
-		this.istances.remove(is);
-		this.duration -= is.getDurataMedia();
+		if(this.istances.remove(is))
+			this.duration -= is.getDurataMedia();
 	}
 
 	@Override
@@ -74,6 +75,17 @@ public class VirtualMachine implements Comparable<VirtualMachine>{
 		}
 		return 0;
 	}
+
+	public int getMachineNumber() {
+		return machineNumber;
+	}
+
+	public List<Event> getSimulation() {
+		return simulation;
+	}
 	
+	public void addEventToSimulation(Event e) {
+		this.simulation.add(e);
+	}
 	
 }

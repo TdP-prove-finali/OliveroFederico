@@ -34,12 +34,12 @@ public class Model {
 		
 		List<RowIstances> ritorno = new ArrayList<RowIstances>();
 		
-		List<Istance> ridenominazioni = this.getIstanzeFromScenario("Ridenom");
+		//List<Istance> ridenominazioni = this.getIstanzeFromScenario("Ridenom");
 		
-		ritorno.add(new RowIstances(ridenominazioni.get(0).toString(), ridenominazioni.get(1).toString(), null, null, null));
+		//ritorno.add(new RowIstances(ridenominazioni.get(0).toString(), ridenominazioni.get(1).toString(), null, null, null));
 		
 		Scheduling s = new Scheduling();
-		List<List<Istance>> lista = s.startScheduling(this.istances, true, 40000);
+		List<List<Istance>> lista = s.startScheduling(this.istances, false, 30000);
 		
 		this.updateMachines(lista);
 		
@@ -48,10 +48,11 @@ public class Model {
 		while(!flag) {
 			
 			String array[] = new String[5];
+			flag = true;
 			for(int i=0; i<5; i++) {
-				flag = true;
+				
 				if(lista.get(i).size()>contatore) {
-					array[i] = lista.get(i).get(contatore).toString();
+					array[i] = lista.get(i).get(contatore).stampa();
 					flag = false;
 				}
 				else 
@@ -114,7 +115,7 @@ public class Model {
 		return ritorno;
 	}
 	
-	private void updateMachines(List<List<Istance>> lista) {
+	public void updateMachines(List<List<Istance>> lista) {
 		
 		for(int i=0; i<5; i++) {
 			
@@ -127,5 +128,39 @@ public class Model {
 		
 	}
 	
+	public List<RowIstances> simulateEvents(int stability, boolean emissioni, boolean riscatti, boolean switchs){
+		
+		Simulator sim = new Simulator(this.vms, this.istances, stability, emissioni, riscatti, switchs);
+		sim.initialize();
+		sim.run();
+		
+		List<RowIstances> ritorno = new ArrayList<RowIstances>();
+		
+		boolean flag = false;
+		int contatore = 0;
+		while(!flag) {
+			
+			String array[] = new String[5];
+			flag = true;
+			for(int i=0; i<5; i++) {
+				
+				List<Event> temp = this.vms.get(i).simulation;
+				if(temp.size()>contatore) {
+					array[i] = temp.get(contatore).stampa();
+					flag = false;
+				}
+				else
+					array[i] = null;
+			}
+			RowIstances re = new RowIstances(array[0],array[1],array[2],array[3],array[4]);
+			ritorno.add(re);
+			contatore++;
+		}
+		
+		
+		RowIstances last = sim.getResults();
+		ritorno.add(last);
+		return ritorno;
+	}
 	
 }

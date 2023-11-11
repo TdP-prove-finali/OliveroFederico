@@ -62,7 +62,7 @@ public class SchedulingV2 {
 				ritorno.get(i).setIstances(new ArrayList<Istance>(parziale.get(i).istances));
 			}
 			
-			System.out.println("-------fine, migliore--------\n");
+			//System.out.println("-------fine, migliore--------\n");
 			return;
 		}
 		
@@ -173,13 +173,13 @@ public class SchedulingV2 {
 	//stampa il numero del tentativo attuale, il max, e la schedulazione
 		public void stampa(List<VirtualMachine> daStampare) {
 			//System.out.println(contatore);
-			System.out.println(max);
+			//System.out.println(max);
 			int dimensione = 0;
 			for(VirtualMachine vm : daStampare) {
-				System.out.println(vm.getIstances());
+				//System.out.println(vm.getIstances());
 				dimensione+=vm.getIstances().size();
 			}
-			System.out.println(dimensione);
+			//System.out.println(dimensione);
 		}
 	
 	//------------------------------------METODI PREPARATORI------------------------------------

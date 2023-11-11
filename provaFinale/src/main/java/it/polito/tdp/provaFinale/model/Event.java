@@ -1,14 +1,18 @@
 package it.polito.tdp.provaFinale.model;
 
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 
-public class Event {
+
+public class Event implements Comparable<Event>{
 	
 	public enum EventType{
 		START_RUN,
 		SUCCESS_RUN,
 		FAILUR_RUN,
+		ISSUE,
+		END_MACHINE,
 		END_SIMULATION
 	}
 	
@@ -68,7 +72,35 @@ public class Event {
 	
 	@Override
 	public String toString() {
-		return this.time+ ": "+this.typeEvent+",    "+this.istance;
+		if(this.istance!=null && this.vm!=null)
+			return this.time+ ": "+this.typeEvent+",    "+this.istance.toString()+", "+this.vm.getId();
+		else
+			return this.time+ ": "+this.typeEvent;
+	}
+
+	@Override
+	public int compareTo(Event o) {
+		if(this.time.compareTo(o.getTime())!=0)
+			return this.time.compareTo(o.getTime());
+		else if(this.typeEvent==EventType.START_RUN)
+			return -1;
+		else
+			return 1;
+	}
+
+	public String stampa() {
+		
+		String evento = "";
+		if(this.typeEvent == EventType.SUCCESS_RUN)
+			evento = "SUCC";
+		else if(this.typeEvent == EventType.FAILUR_RUN)
+			evento = "FAIL";
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        String formattedTime = this.time.format(formatter);
+        
+		return formattedTime+": "+evento+" "+this.istance.stampa();
+		
 	}
 	
 	

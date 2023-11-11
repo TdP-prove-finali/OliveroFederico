@@ -46,6 +46,10 @@ public class RowIstances {
 	public void setI5(String i5) {
 		this.i5 = i5;
 	}
+	@Override
+	public String toString() {
+		return  this.i1+", "+this.i2+", "+this.i3+", "+this.i4+", "+this.i5;
+	}
 	
 	
 

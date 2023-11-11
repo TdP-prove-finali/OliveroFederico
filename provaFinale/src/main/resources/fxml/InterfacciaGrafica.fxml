@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -15,9 +16,9 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.provaFinale.FXMLController">
    <left>
-      <AnchorPane fx:id="Ancor" prefHeight="526.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="Ancor" prefHeight="700.0" prefWidth="850.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox layoutX="185.0" layoutY="206.0" prefHeight="43.0" prefWidth="379.0" AnchorPane.leftAnchor="185.0" AnchorPane.rightAnchor="186.0">
+            <HBox layoutX="233.0" layoutY="180.0" prefHeight="43.0" prefWidth="383.0" AnchorPane.leftAnchor="233.0" AnchorPane.rightAnchor="234.0">
                <children>
                   <Button id="Button1" fx:id="scheduleButton" mnemonicParsing="false" onAction="#doSchedule" prefHeight="30.0" prefWidth="140.0" text="Schedula">
                      <HBox.margin>
@@ -31,13 +32,13 @@
                   </Button>
                </children>
             </HBox>
-            <Slider fx:id="stabilitySlider" blockIncrement="1.0" layoutX="157.0" layoutY="97.0" majorTickUnit="1.0" max="2.0" minorTickCount="1" prefHeight="26.0" prefWidth="205.0" showTickLabels="true" showTickMarks="true" />
-            <Label layoutX="361.0" layoutY="14.0" prefHeight="25.0" prefWidth="300.0" text="SOFTWARE PER SCHEDULAZIONE E SIMULAZIONE DI TEST" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0">
+            <Slider fx:id="stabilitySlider" blockIncrement="1.0" layoutX="94.0" layoutY="122.0" majorTickUnit="1.0" max="2.0" minorTickCount="1" prefHeight="38.0" prefWidth="157.0" showTickLabels="true" showTickMarks="true" />
+            <Label layoutX="173.0" layoutY="14.0" prefHeight="27.0" prefWidth="503.0" text="SOFTWARE PER SCHEDULAZIONE E SIMULAZIONE DI TEST" AnchorPane.leftAnchor="173.0" AnchorPane.rightAnchor="174.0">
                <font>
                   <Font name="Nirmala UI Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="14.0" layoutY="237.0" prefHeight="26.0" prefWidth="58.0" text="OUTPUT:">
+            <Label layoutX="14.0" layoutY="224.0" prefHeight="26.0" prefWidth="58.0" text="OUTPUT:">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -47,21 +48,18 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <Label layoutX="72.0" layoutY="97.0" prefHeight="26.0" prefWidth="73.0" text="Stabilità:">
+            <Label layoutX="57.0" layoutY="96.0" prefHeight="26.0" prefWidth="73.0" text="Stabilità:" AnchorPane.topAnchor="92.0">
                <font>
                   <Font name="Verdana Italic" size="13.0" />
                </font>
             </Label>
-            <Label layoutX="157.0" layoutY="73.0" prefHeight="22.0" prefWidth="34.0" text="Bassa" />
-            <Label layoutX="242.0" layoutY="73.0" prefHeight="22.0" prefWidth="34.0" text="Media" />
-            <Label layoutX="340.0" layoutY="73.0" prefHeight="22.0" prefWidth="34.0" text="Alta" />
-            <Label layoutX="506.0" layoutY="97.0" prefHeight="26.0" prefWidth="86.0" text="Rischio KO:">
+            <Label layoutX="589.0" layoutY="92.0" prefHeight="26.0" prefWidth="86.0" text="Rischio KO:">
                <font>
                   <Font name="Verdana Italic" size="13.0" />
                </font>
             </Label>
-            <Button fx:id="resetButton" layoutX="644.0" layoutY="491.0" mnemonicParsing="false" onAction="#doReset" prefHeight="26.0" prefWidth="80.0" text="Reset" AnchorPane.bottomAnchor="5.0" />
-            <VBox layoutX="612.0" layoutY="102.0" prefHeight="82.0" prefWidth="100.0">
+            <Button fx:id="resetButton" layoutX="719.0" layoutY="662.0" mnemonicParsing="false" onAction="#doReset" prefHeight="26.0" prefWidth="80.0" text="Reset" AnchorPane.bottomAnchor="7.0" />
+            <VBox layoutX="699.0" layoutY="105.0" prefHeight="82.0" prefWidth="100.0">
                <children>
                   <CheckBox fx:id="emissioniCheckBox" mnemonicParsing="false" prefHeight="18.0" prefWidth="108.0" text="Emissioni" />
                   <CheckBox fx:id="riscattiCheckBox" mnemonicParsing="false" prefHeight="18.0" prefWidth="108.0" text="Riscatti">
@@ -76,21 +74,22 @@
                   </CheckBox>
                </children>
             </VBox>
-            <CheckBox fx:id="schedulingCheckBox" layoutX="157.0" layoutY="165.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="169.0" text="Schedulazione Intelligente" />
-            <Label layoutX="72.0" layoutY="161.0" prefHeight="26.0" prefWidth="73.0" text="Modalità:">
+            <CheckBox fx:id="schedulingCheckBox" layoutX="371.0" layoutY="122.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="169.0" text="Schedulazione Intelligente" />
+            <Label layoutX="297.0" layoutY="92.0" prefHeight="26.0" prefWidth="73.0" text="Modalità:">
                <font>
                   <Font name="Verdana Italic" size="13.0" />
                </font>
             </Label>
-            <TableView fx:id="table" layoutX="20.0" layoutY="267.0" prefHeight="221.0" prefWidth="730.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+            <TableView fx:id="table" layoutX="20.0" layoutY="251.0" prefHeight="282.0" prefWidth="830.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
               <columns>
-                <TableColumn fx:id="col1" prefWidth="146.0" text="UFT-ONE-1" />
-                <TableColumn fx:id="col2" prefWidth="146.0" text="UFT-ONE-2" />
-                  <TableColumn fx:id="col3" prefWidth="146.0" text="UFT-ONE-3" />
-                  <TableColumn fx:id="col4" prefWidth="146.0" text="UFT-ONE-4" />
-                  <TableColumn fx:id="col5" prefWidth="146.0" text="UFT-ONE-5" />
+                <TableColumn fx:id="col1" prefWidth="166.0" text="UFT-ONE-1" />
+                <TableColumn fx:id="col2" prefWidth="166.0" text="UFT-ONE-2" />
+                  <TableColumn fx:id="col3" prefWidth="166.0" text="UFT-ONE-3" />
+                  <TableColumn fx:id="col4" prefWidth="166.0" text="UFT-ONE-4" />
+                  <TableColumn fx:id="col5" prefWidth="166.0" text="UFT-ONE-5" />
               </columns>
             </TableView>
+            <TextArea fx:id="outputArea" layoutX="11.0" layoutY="540.0" prefHeight="122.0" prefWidth="830.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
          </children>
       </AnchorPane>
    </left>
