@@ -563,3 +563,16 @@ Come si può notare da queste immagini, nel primo caso l'alta instabilità porta
 Possiamo notare che l'applicativo risponde bene agli input dell'utente, presentando tempi di reazione sufficientemente brevi. Tra i punti di forza emergono l'algoritmo di simulazione, che riesce a rappresentare una situazione reale, ritornando dei parametri che possono essere utilizzati per analizzare la situazione e l'algoritmo ricorsivo, che seppur non trovando la soluzione ottima al problema riesce comunque a produrre una schedulazione che permetta un margine sufficiente allo svoglimento di tutti i test, anche in una condizione di stabilità intermedia. Questi due fattori combinati possono tornare molto utili agli sviluppatori, in quanto grazie all'algoritmo di schedulazione possono dedicare meno tempo all'assegnazione di una macchina virtuale a un test, e grazie all'output della simulazione possono capire con anticipo se è il caso di intervenire a codice prima dell'inizio ufficiale dello svolgimento dei test. Tra le principali criticità figura il raccoglimento dei dati su cui si fonda la simulazione di eventi. Per ottenere un output che sia il più accurato possibile andrebbero analizzate meglio le informazioni in input, cercando la presenza di eventuali trend per riportarla durante la simulazione osservandone le conseguenze che ne derivano.
 Per concludere, l'applicativo risponde bene agli input e, con una premessa di accuratezza dei dati raccolti, risolve un problema reale.
 
+
+
+<div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<img class = "center" src = "C:\Users\Lenovo\Desktop\provaFinale\immagini\licenzaRelazione.png"/>
+</div>
