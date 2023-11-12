@@ -97,10 +97,7 @@ public class TestModel {
 		}
 		
 		
-		Model m2 = new Model();
-		m2.scheduleIstances(false);
-		m2.simulateEvents(2, false, false, false, false);
-		
+	
 		
 		
 		

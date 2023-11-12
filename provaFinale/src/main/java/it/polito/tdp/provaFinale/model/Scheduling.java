@@ -34,7 +34,7 @@ public class Scheduling {
 		if(randomScheduling)
 			Collections.shuffle(start);
 		
-		List<List<Istance>> ritorno = schedule(start, 5);
+		List<List<Istance>> ritorno = schedule(start);
 		
 		return ritorno;
 		
@@ -47,11 +47,11 @@ public class Scheduling {
 	 * avvia la ricorsione
 	 * @RETURN restituisce la schedulazione sotto forma di lista di liste di istanze  
 	 */
-	private List<List<Istance>> schedule(List<Istance> toSchedule, int nVM){
+	private List<List<Istance>> schedule(List<Istance> toSchedule){
 		
 		//creo un parziale, contenente una lista di istanze per macchina (nMacchine passato in input)
 		List<List<Istance>> parziale = new ArrayList<List<Istance>>();
-		for(int m=0; m<nVM; m++) {
+		for(int m=0; m<5; m++) {
 			List<Istance> listaM = new ArrayList<Istance>();
 			parziale.add(listaM);
 		}
@@ -94,7 +94,6 @@ public class Scheduling {
 		else if(worst>max) {
 			return;
 		}
-		
 		
 		//------------------------------PARTE RICORSIVA------------------------------
 		

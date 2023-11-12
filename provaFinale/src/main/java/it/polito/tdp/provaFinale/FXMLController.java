@@ -1,13 +1,10 @@
 package it.polito.tdp.provaFinale;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import it.polito.tdp.provaFinale.model.Istance;
 import it.polito.tdp.provaFinale.model.Model;
-import it.polito.tdp.provaFinale.model.RowEvents;
 import it.polito.tdp.provaFinale.model.RowIstances;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

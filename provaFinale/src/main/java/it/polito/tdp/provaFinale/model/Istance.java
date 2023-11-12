@@ -15,7 +15,6 @@ public class Istance {
 	private String prodotto;
 	private Integer durataMedia;
 	private State status;
-	private VirtualMachine vm;
 	private double successRate;
 	
 	public Istance(Integer id, String scenario, String compagnia, String prodotto) {
@@ -60,9 +59,6 @@ public class Istance {
 		this.status = status;
 	}
 
-	public void setVm(VirtualMachine vm) {
-		this.vm = vm;
-	}
 
 	@Override
 	public String toString() {

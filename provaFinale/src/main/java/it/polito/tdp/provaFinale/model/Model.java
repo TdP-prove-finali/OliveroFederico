@@ -34,10 +34,6 @@ public class Model {
 		
 		List<RowIstances> ritorno = new ArrayList<RowIstances>();
 		
-		//List<Istance> ridenominazioni = this.getIstanzeFromScenario("Ridenom");
-		
-		//ritorno.add(new RowIstances(ridenominazioni.get(0).toString(), ridenominazioni.get(1).toString(), null, null, null));
-		
 		int max = 33500;
 		if(shuffle)
 			max = 35000;

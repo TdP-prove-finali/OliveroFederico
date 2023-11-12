@@ -26,8 +26,8 @@ public class Simulator {
 	boolean simulazioneIntelligente;
 	
 	//orari di inizio e fine (16 ore totali)
-	private LocalTime startDay1 = LocalTime.of(8, 0, 0);
-	private LocalTime endDay1 = LocalTime.of(22, 30, 0);
+	private LocalTime startDay = LocalTime.of(8, 0, 0);
+	private LocalTime endDay = LocalTime.of(22, 30, 0);
 	
 	
 	
@@ -76,13 +76,13 @@ public class Simulator {
 	
 	public void initialize() {
 		
-		Event e1 = new Event(this.machines.get(0).getIstances().get(0), this.machines.get(0), this.startDay1, EventType.START_RUN);
-		Event e2 = new Event(this.machines.get(1).getIstances().get(0), this.machines.get(1), this.startDay1, EventType.START_RUN);
-		Event e3 = new Event(this.machines.get(2).getIstances().get(0), this.machines.get(2), this.startDay1, EventType.START_RUN);
-		Event e4 = new Event(this.machines.get(3).getIstances().get(0), this.machines.get(3), this.startDay1, EventType.START_RUN);
-		Event e5 = new Event(this.machines.get(4).getIstances().get(0), this.machines.get(4), this.startDay1, EventType.START_RUN);
+		Event e1 = new Event(this.machines.get(0).getIstances().get(0), this.machines.get(0), this.startDay, EventType.START_RUN);
+		Event e2 = new Event(this.machines.get(1).getIstances().get(0), this.machines.get(1), this.startDay, EventType.START_RUN);
+		Event e3 = new Event(this.machines.get(2).getIstances().get(0), this.machines.get(2), this.startDay, EventType.START_RUN);
+		Event e4 = new Event(this.machines.get(3).getIstances().get(0), this.machines.get(3), this.startDay, EventType.START_RUN);
+		Event e5 = new Event(this.machines.get(4).getIstances().get(0), this.machines.get(4), this.startDay, EventType.START_RUN);
 		
-		Event e6 = new Event(null, null, this.endDay1, EventType.END_SIMULATION);
+		Event e6 = new Event(null, null, this.endDay, EventType.END_SIMULATION);
 		
 		this.queue.add(e1);
 		this.queue.add(e2);
@@ -373,21 +373,22 @@ public class Simulator {
 			
 			double successRate=0.0;
 			
+			//recupero dal database numero di successi e di fallimenti, numero massimo di failures in un giorno e media di failures
 			Integer successes = rdao.getIstanceSuccesses(i);
 			Integer failures = rdao.getFailurDays(i);
 			Integer maxDailyFailures = rdao.getMaxFailur(i);
 			Double averageFailures = rdao.getAverageFailurs(i);
 			
+			//controllo se lo scenario dell'istanza in questione sia tra le checkBox selezionate
 			boolean scenaryFlag = false;
 			if(this.stabilityMap.get(i.getScenario())!=null)
 				scenaryFlag = this.stabilityMap.get(i.getScenario());
 			
+			//-----------------------------ATTRIBUISCO UN SUCCESS RATE ALL'ISTANZA---------------------------
+			
 			// caso migliore: situazione stabile e nessun problema di scenario
 			if(this.stability == 2 && !scenaryFlag) {
-				
-				
 				successRate = (successes/(double)(successes+failures));
-				
 			}
 			
 			//caso intermedio: situazione stabile ma problemi di scenario o situazione media e nessun problema di scenario
@@ -424,7 +425,7 @@ public class Simulator {
 		r3.strip();
 		int mancanti = 49-this.concluded.size()-this.issuesList.size();
 		String r4 = "NUMERO TEST NON ESEGUITI: "+mancanti;
-		String r5 = "ORA DI INIZIO: "+this.startDay1+" ORA DI FINE: "+this.endSimulationTime;
+		String r5 = "ORA DI INIZIO: "+this.startDay+" ORA DI FINE: "+this.endSimulationTime;
 		RowIstances ritorno = new RowIstances(r1, r2, r3, r4, r5);
 		
 		return ritorno;
