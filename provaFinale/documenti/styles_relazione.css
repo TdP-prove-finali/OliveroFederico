@@ -1,0 +1,314 @@
+/*TITLES*/
+
+/*
+.title-cont {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	background-color:#091a7e;
+}*/
+
+
+h1 {
+	color: black;
+	display:flex;
+	justify-content: center;
+	align-items:center;
+	text-align:center;
+}
+h2 {
+	color: black;
+	text-align:center;
+}
+
+h3 {
+	color: black;
+	text-align:center;
+}
+
+h4 {
+	color: black;
+}
+
+h1,h2,h3,h4 {
+	font-weight: bold; 
+	text-transform: uppercase;
+}
+
+/*SOMMARIO*/
+.sommario{
+	text-align:center;
+}
+
+/*INDEX*/	
+
+.index {
+	display: flex;
+	text-align: left;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	/*text-transform: uppercase;*/
+}
+/*
+.index div {
+	display: flex;
+	flex-direction: column;
+	width: 95vw;
+	justify-content: center;
+	align-items: left;
+}
+
+.index div a {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: left;
+	width: 100%;
+	white-space: nowrap;
+}
+
+.index h3 {
+    word-break: keep-all;
+    white-space: nowrap;
+}
+
+.index div div a {
+	max-width: 50%;
+	white-space: nowrap;
+	color: black;
+	flex: 1 0 45%
+}
+
+.paragrafi_indice{
+
+	max-width: 60%;
+	text-align:left;
+
+}*/
+
+.dot {
+	width: 55%;
+	height: 0.4em;
+}
+
+.dot div {
+
+	border-bottom: dotted;
+	width: 55%;
+	height: 0.4em;
+	border-color: black;
+	border-width: small;
+
+}
+
+/*TEXT*/
+
+* {
+	font-family: sans-serif;
+	color: black;
+}
+
+.link{
+	color: #5698ff;
+	text-decoration: underline;
+}
+
+.huge-font{
+	font-size:72px;
+}
+/*
+.testDesc {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: #5a60ae;
+	border: solid;
+	border-radius: 15px;
+	width: 45vw;
+}
+
+.testDesc div {
+	color: black;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	height: 2.25em
+}
+
+.testDesc div p:nth-child(odd) {
+	padding-left: 10px;
+	width: 65vw;
+	text-align: left;
+}
+
+.testDesc div p:nth-child(even) {
+	padding-right: 10px;
+	width: 35vw;
+	text-align: right;
+}
+*/
+.link{
+  color:#5698ff !important;
+  text-decoration: underline !important
+}
+
+/*COLORS*/
+
+.red {
+	color: #e5004c 
+}
+/*
+.green {
+	color: #6eb842
+}
+
+.blue {
+	color: #091a7e
+}
+
+.yellow {
+	color: #e09e1c
+}
+
+.gray {
+	color: #5a60ae
+}
+*/
+
+/*IMAGES*/
+
+.img-text-sx,
+.img-text-dx {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	text-align: left;
+	page-break-inside:avoid !important;
+}
+
+.img-text-sx div:nth-child(1),
+.img-text-dx div:nth-child(2) {
+	object-fit: cover;
+}
+
+.img-text-dx p,
+.img-text-sx p {
+	text-align: left
+}
+
+.ridotta{
+	width : 70%;
+	height : 70%;
+}
+
+.spazioInMezzo{
+	display: flex;
+    justify-content: space-between;
+	margin-top: 30px;
+}
+
+.grassetto{
+	font-weight: bold;
+}
+
+.fondo{
+	margin-top: 20px;
+}
+/*FORMATTING*/
+
+.firstPage{
+	flex-direction:row;
+	align-items: center;
+	text-align: center;
+	width:100%;
+	font-family:'Courier New', Courier, monospace !important;
+	font-size: 1.2em;
+}
+
+.center {
+	flex-direction:row;
+	align-items: center;
+	text-align: center;
+	width:100%;
+}
+
+.left{
+	text-align: left;
+	margin-left: 20px;
+}
+
+
+.right{
+	text-align: right;
+	margin-right: 20px;
+}
+
+.halfPage{
+	width: 45%;
+	margin-left: 10px;
+	margin-right: 10px;
+
+}
+/*
+.center-col {
+	flex-direction:column;
+}
+
+.center,.center-col{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: left
+}
+
+.li-two,.li-three{
+	width:100%;
+	display:flex;
+	flex-direction:column;
+}
+.li-two li,.li-three li {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+.li-two li {
+	width: 85%;
+}
+.li-three li {
+	width: 50%;
+	white-space:nowrap;
+}
+*/
+
+.lesser-container {
+	display: flex;
+	width: 95% !important;
+	/*justify-content: space-between;*/
+	flex-wrap: wrap;
+	flex-direction: column !important;
+	margin-left: 5vw;
+	/*align-items: flex-start !important;*/
+	color: black;
+	text-transform: none;
+	
+}
+
+.unbr{
+	page-break-inside:avoid !important;
+}
+
+.w-max {
+	width:100%;
+}
+
+.middle-arrow{
+	display:flex;
+	flex-direction:row;
+	justify-content:space-evenly;
+	align-items:center;
+	page-break-inside:avoid !important;
+}
